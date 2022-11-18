@@ -34,7 +34,7 @@ set(REQUIRED_LIBS_QUALIFIED Qt6::Quick)
 
 find_package(Qt6 COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 
-qt_add_executable(${PROJECT_NAME} main.cpp)
+qt_add_executable(${PROJECT_NAME} main.cpp fieldmanager.cpp)
 
 qt_add_qml_module(
         ${PROJECT_NAME}
@@ -56,6 +56,12 @@ target_link_libraries(
         ${PROJECT_NAME}
         PRIVATE
         ${REQUIRED_LIBS_QUALIFIED}
+)
+
+target_include_directories(
+        ${PROJECT_NAME}
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 if (WIN32)
