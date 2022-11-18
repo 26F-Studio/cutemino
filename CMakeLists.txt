@@ -1,33 +1,71 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(cutemino VERSION 0.1 LANGUAGES CXX)
+if (CMAKE_PREFIX_PATH)
+    set(QT_BINARY_DIR ${CMAKE_PREFIX_PATH}/../../bin)
+endif ()
+if (CMAKE_BUILD_TYPE MATCHES "Debug")
+    set(CMAKE_CXX_FLAGS_INIT -DQT_QML_DEBUG)
+endif ()
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 
-find_package(Qt6 6.2 COMPONENTS Quick REQUIRED)
+message(STATUS "C++ standard set to ${CMAKE_CXX_STANDARD}")
 
-qt_add_executable(appcutemino
-    main.cpp
+project(cutemino VERSION 0.0.1 LANGUAGES CXX)
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    message(STATUS "Compiler is Clang")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    message(STATUS "Compiler is GCC")
+    add_compile_options(-Wno-volatile)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+    message(STATUS "Compiler is Intel C++")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    message(STATUS "Compiler is Visual Studio C++")
+    add_compile_options(/MP /utf-8)
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS NOMINMAX)
+endif ()
+
+set(REQUIRED_LIBS Quick)
+set(REQUIRED_LIBS_QUALIFIED Qt6::Quick)
+
+find_package(Qt6 COMPONENTS ${REQUIRED_LIBS} REQUIRED)
+
+qt_add_executable(${PROJECT_NAME} main.cpp)
+
+qt_add_qml_module(
+        ${PROJECT_NAME}
+        URI ${PROJECT_NAME}
+        VERSION 1.0
+        QML_FILES main.qml
 )
 
-qt_add_qml_module(appcutemino
-    URI cutemino
-    VERSION 1.0
-    QML_FILES main.qml 
+set_target_properties(
+        ${PROJECT_NAME} PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER ${PROJECT_NAME}.studio26f.org
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
 )
 
-set_target_properties(appcutemino PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+target_link_libraries(
+        ${PROJECT_NAME}
+        PRIVATE
+        ${REQUIRED_LIBS_QUALIFIED}
 )
 
-target_link_libraries(appcutemino
-    PRIVATE Qt6::Quick)
+if (WIN32)
+    if (QT_BINARY_DIR)
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                COMMAND ${QT_BINARY_DIR}/windeployqt.exe
+                "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+    endif ()
+endif ()
 
-install(TARGETS appcutemino
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS ${PROJECT_NAME}
+        BUNDLE DESTINATION .
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

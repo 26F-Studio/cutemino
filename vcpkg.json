@@ -1,0 +1,15 @@
+{
+    "name": "cutemino",
+    "version-string": "0.0.1",
+    "maintainers": [
+        "Particle_G <particle_g@outlook.com>"
+    ],
+    "description": "A block stacking game base on Qt",
+    "homepage": "https://github.com/26F-Studio/cutemino",
+    "documentation": "https://github.com/26F-Studio/cutemino",
+    "license": "LGPL-3.0",
+    "dependencies": [
+        "cryptopp",
+        "magic-enum"
+    ]
+}
