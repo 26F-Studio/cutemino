@@ -4,12 +4,13 @@
 
 #pragma once
 
-#include <QQuickPaintedItem>
+#include <QVector>
 
-namespace CuteMino::Controllers {
-    class Field : public QQuickPaintedItem {
-        Q_OBJECT
+namespace CuteMino::Models {
+    class Field {
     public:
+        explicit Field(uint64_t rowCount, uint64_t columnCount);
 
+        std::atomic<uint64_t> rowCount, columnCount;
     };
 }

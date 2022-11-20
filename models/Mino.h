@@ -5,29 +5,33 @@
 #pragma once
 
 #include <QImage>
+#include <QPoint>
 #include <types/Mino.h>
 
 namespace CuteMino::Models {
     class Mino {
     public:
-        explicit Mino(Types::Mino type);
+        enum class Orientation {
+            Down,
+            Left,
+            Right,
+            Up,
+        };
 
-        [[nodiscard]] Types::Mino type() const;
+        Mino(
+                Types::Mino type,
+                QPoint position,
+                Orientation orientation = Orientation::Up
+        );
 
-        [[nodiscard]] QImage image() const;
+        Mino(const Mino &mino) : originalType(mino.originalType),
+                                 currentType(mino.currentType),
+                                 position(mino.position),
+                                 orientation(mino.orientation) {}
 
-        [[nodiscard]] int rotation() const;
-
-        [[nodiscard]] int x() const;
-
-        [[nodiscard]] int y() const;
-
-        void rotate();
-
-        void move(int x, int y);
-
-    private:
-        Types::Mino _type;
-        QImage _minoQImage{};
+        const Types::Mino originalType;
+        Types::Mino currentType;
+        QPoint position;
+        Orientation orientation;
     };
 }
