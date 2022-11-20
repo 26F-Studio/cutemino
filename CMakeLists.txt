@@ -34,13 +34,37 @@ set(REQUIRED_LIBS_QUALIFIED Qt6::Quick)
 
 find_package(Qt6 COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 
-qt_add_executable(${PROJECT_NAME} main.cpp fieldmanager.cpp)
+qt_add_executable(${PROJECT_NAME} main.cpp)
 
 qt_add_qml_module(
         ${PROJECT_NAME}
         URI ${PROJECT_NAME}
         VERSION 1.0
         QML_FILES main.qml
+)
+
+aux_source_directory(controllers CTRL_SRC)
+aux_source_directory(models MODEL_SRC)
+aux_source_directory(types TYPE_SRC)
+
+target_sources(
+        ${PROJECT_NAME}
+        PRIVATE
+        ${CTRL_SRC}
+        ${MODEL_SRC}
+        ${TYPE_SRC}
+)
+
+target_include_directories(
+        ${PROJECT_NAME}
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(
+        ${PROJECT_NAME}
+        PRIVATE
+        ${REQUIRED_LIBS_QUALIFIED}
 )
 
 set_target_properties(
@@ -50,18 +74,6 @@ set_target_properties(
         MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         MACOSX_BUNDLE TRUE
         WIN32_EXECUTABLE TRUE
-)
-
-target_link_libraries(
-        ${PROJECT_NAME}
-        PRIVATE
-        ${REQUIRED_LIBS_QUALIFIED}
-)
-
-target_include_directories(
-        ${PROJECT_NAME}
-        PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 if (WIN32)
