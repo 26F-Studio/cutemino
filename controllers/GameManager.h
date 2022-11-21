@@ -8,7 +8,6 @@
 #include <QImage>
 #include <QQueue>
 #include <QQuickPaintedItem>
-#include <QVector>
 
 #include <models/Field.h>
 #include <models/Mino.h>
@@ -23,20 +22,25 @@ namespace CuteMino::Controllers {
 
         Q_INVOKABLE void exportSettings();
 
-        uint32_t _rowCount{}, _columnCount{};
-        double _screenHeight{}, _screenWidth{}, _uiScale{}, _fieldHeight{}, _fieldWidth{}, _minoEdgeLength{};
+        uint32_t _rowCount{}, _columnCount{}, _nextCount{};
+        double _uiScale{}, _fieldHeight{}, _fieldWidth{}, _minoEdgeLength{};
 
         QHash<Types::Mino, QImage> _minoAssets{};
+
+    protected:
+        void keyPressEvent(QKeyEvent *event) override;
+
+        void keyReleaseEvent(QKeyEvent *event) override;
 
     private:
         void _generateMinoQueue();
 
         double _frameHeight{}, _frameWidth{}, _frameThickness{};
         std::unique_ptr<Models::Field> _field;
-        QVector<Models::Mino> _minoQueue;
+        QQueue<Models::Mino> _minoQueue;
         std::unique_ptr<Models::Mino> _currentMino;
 
     public slots:
-        Q_INVOKABLE void onGameStart(GameManager *_gameManager);
+        Q_INVOKABLE void onGameStart(CuteMino::Controllers::GameManager *_gameManager);
     };
 }

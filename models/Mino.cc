@@ -11,7 +11,11 @@ Mino::Mino(
         Types::Mino type,
         QPoint position,
         Orientation orientation
-) : originalType(type),
-    currentType(type),
+) : _originalType(type),
+    _currentType(type),
     position(position),
     orientation(orientation) {}
+
+Types::Mino Mino::type(bool original) const {
+    return original ? _originalType : _currentType;
+}

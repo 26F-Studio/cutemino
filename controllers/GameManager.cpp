@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <magic_enum.hpp>
 #include <random>
 
 #include <QSettings>
@@ -28,30 +29,30 @@ void GameManager::loadSettings() {
     _uiScale = qSettings.value("QtMino_uiScale", 0.8).toDouble();
     _frameThickness = qSettings.value("QtMino_FrameThickness", 10.0).toDouble();
 
-    _screenHeight = height();
-    _screenWidth = width();
+    const auto boxHeight = height();
+    const auto boxWidth = width();
 
-    if (_screenHeight * _columnCount >= _screenWidth * _rowCount) {
-        _fieldWidth = _screenWidth * _uiScale - _frameThickness * 2.0;
+    if (boxHeight * _columnCount >= boxWidth * _rowCount) {
+        _fieldWidth = boxWidth * _uiScale - _frameThickness * 2.0;
         _fieldHeight = _fieldWidth * static_cast<double>(_rowCount) / static_cast<double>(_columnCount);
         _frameWidth = _fieldWidth + _frameThickness;
         _frameHeight = _fieldHeight + _frameThickness;
         _minoEdgeLength = _fieldWidth / static_cast<double>(_columnCount);
     } else {
-        _fieldHeight = _screenHeight * _uiScale - _frameThickness * 2.0;
+        _fieldHeight = boxHeight * _uiScale - _frameThickness * 2.0;
         _fieldWidth = _fieldHeight * static_cast<double>(_columnCount) / static_cast<double>(_rowCount);
         _frameHeight = _fieldHeight + _frameThickness;
         _frameWidth = _fieldWidth + _frameThickness;
         _minoEdgeLength = _fieldHeight / static_cast<double>(_rowCount);
     }
 
-    _minoAssets[Mino::I].load(":/skins/normal/skyblue.png");
-    _minoAssets[Mino::J].load(":/skins/normal/blue.png");
-    _minoAssets[Mino::L].load(":/skins/normal/orange.png");
-    _minoAssets[Mino::O].load(":/skins/normal/yellow.png");
-    _minoAssets[Mino::S].load(":/skins/normal/green.png");
-    _minoAssets[Mino::T].load(":/skins/normal/pink.png");
-    _minoAssets[Mino::Z].load(":/skins/normal/red.png");
+    _minoAssets[Mino::I].load(":/assets/skins/normal/skyblue.png");
+    _minoAssets[Mino::J].load(":/assets/skins/normal/blue.png");
+    _minoAssets[Mino::L].load(":/assets/skins/normal/orange.png");
+    _minoAssets[Mino::O].load(":/assets/skins/normal/yellow.png");
+    _minoAssets[Mino::S].load(":/assets/skins/normal/green.png");
+    _minoAssets[Mino::T].load(":/assets/skins/normal/pink.png");
+    _minoAssets[Mino::Z].load(":/assets/skins/normal/red.png");
 
     qDebug() << "settings loaded.";
 }
@@ -74,7 +75,7 @@ void GameManager::_generateMinoQueue() {
 
     _minoQueue.clear();
     for (int i = 0; i < 7; i++) {
-        _minoQueue.append(Models::Mino{static_cast<Mino>(i), QPoint(0, 0)});
+        _minoQueue.enqueue(Models::Mino{static_cast<Mino>(i), QPoint(0, 0)});
     }
     std::random_device rd;
     std::mt19937 g(rd());
@@ -84,5 +85,14 @@ void GameManager::_generateMinoQueue() {
 
 void GameManager::onGameStart(GameManager *_gameManager) {
     qDebug() << "GameManager received settings signal.";
-    _currentMino = std::make_unique<Models::Mino>(_gameManager);
+    _currentMino = make_unique<Models::Mino>(_minoQueue.dequeue());
+    _field = make_unique<Models::Field>(_rowCount, _columnCount);
+}
+
+void GameManager::keyPressEvent(QKeyEvent *event) {
+    QQuickPaintedItem::keyPressEvent(event);
+}
+
+void GameManager::keyReleaseEvent(QKeyEvent *event) {
+    QQuickPaintedItem::keyReleaseEvent(event);
 }

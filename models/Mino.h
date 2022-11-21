@@ -24,14 +24,11 @@ namespace CuteMino::Models {
                 Orientation orientation = Orientation::Up
         );
 
-        Mino(const Mino &mino) : originalType(mino.originalType),
-                                 currentType(mino.currentType),
-                                 position(mino.position),
-                                 orientation(mino.orientation) {}
+        [[nodiscard]] Types::Mino type(bool original = false) const;
 
-        const Types::Mino originalType;
-        Types::Mino currentType;
         QPoint position;
         Orientation orientation;
+    private:
+        Types::Mino _originalType, _currentType;
     };
 }
