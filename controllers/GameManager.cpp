@@ -1,7 +1,8 @@
 #include <algorithm>
-#include <magic_enum.hpp>
+//#include <magic_enum.hpp>
 #include <random>
 
+#include <QPainter>
 #include <QSettings>
 
 #include <controllers/GameManager.h>
@@ -70,6 +71,22 @@ void GameManager::exportSettings() {
     qDebug() << "settings exported.";
 }
 
+void GameManager::paint(QPainter *painter) {
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    _paintFrame(painter);
+    _paintField(painter);
+    _paintMino(painter);
+    _paintNexts(painter);
+}
+
+void GameManager::keyPressEvent(QKeyEvent *event) {
+    QQuickPaintedItem::keyPressEvent(event);
+}
+
+void GameManager::keyReleaseEvent(QKeyEvent *event) {
+    QQuickPaintedItem::keyReleaseEvent(event);
+}
+
 void GameManager::_generateMinoQueue() {
     qDebug() << "Generating mino queue...";
 
@@ -89,10 +106,42 @@ void GameManager::onGameStart(GameManager *_gameManager) {
     _field = make_unique<Models::Field>(_rowCount, _columnCount);
 }
 
-void GameManager::keyPressEvent(QKeyEvent *event) {
-    QQuickPaintedItem::keyPressEvent(event);
+void GameManager::_paintFrame(QPainter *painter) {
+    const auto boxHeight = height();
+    const auto boxWidth = width();
+    QPointF topLeft(boxWidth / 2.0 - _frameWidth / 2.0, boxHeight / 2.0 - _frameHeight / 2.0);
+    QPointF topRight(boxWidth / 2.0 + _frameWidth / 2.0, boxHeight / 2.0 - _frameHeight / 2.0);
+    QPointF bottomLeft(boxWidth / 2.0 - _frameWidth / 2.0, boxHeight / 2.0 + _frameHeight / 2.0);
+    QPointF bottomRight(boxWidth / 2.0 + _frameWidth / 2.0, boxHeight / 2.0 + _frameHeight / 2.0);
+    painter->save();
+    painter->setPen(QPen(QColor("gray"), 1));
+    for (int row = 1; row < _rowCount; ++row) {
+        QPointF tempLeft(topLeft.x() + _frameThickness / 2.0, topLeft.y() + _frameThickness / 2.0 + row * _minoEdgeLength);
+        QPointF tempRight(topRight.x() + _frameThickness / 2.0, topRight.y() + _frameThickness / 2.0 + row * _minoEdgeLength);
+        painter->drawLine(tempLeft, tempRight);
+    }
+
+    for (int column = 1; column < _columnCount; ++column) {
+        QPointF tempTop(topLeft.x() + _frameThickness / 2.0 + column * _minoEdgeLength, topLeft.y() + _frameThickness / 2.0);
+        QPointF tempBottom(bottomLeft.x() + _frameThickness / 2.0 + column * _minoEdgeLength, bottomLeft.y() + _frameThickness / 2.0);
+        painter->drawLine(tempTop, tempBottom);
+    }
+
+    painter->setPen(QPen(QColor("white"), 10, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+    painter->setBrush(QColor("transparent"));
+    painter->drawRect(QRectF(topLeft, bottomRight));
+    painter->restore();
 }
 
-void GameManager::keyReleaseEvent(QKeyEvent *event) {
-    QQuickPaintedItem::keyReleaseEvent(event);
+void GameManager::_paintField(QPainter *painter) {
+
 }
+
+void GameManager::_paintMino(QPainter *painter) {
+
+}
+
+void GameManager::_paintNexts(QPainter *painter) {
+
+}
+

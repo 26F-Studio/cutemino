@@ -1,6 +1,6 @@
 <RCC>
-    <qresource prefix="/views/">
-        <file>TitleStackView.qml</file>
-        <file>SoloGameStackView.qml</file>
+    <qresource prefix="/">
+        <file>views/TitleStackView.qml</file>
+        <file>views/SoloGameStackView.qml</file>
     </qresource>
 </RCC>

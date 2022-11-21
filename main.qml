@@ -1,39 +1,23 @@
 import QtQuick
-import QtQuick.VirtualKeyboard
+import QtQuick.Controls
+import QtQuick.Controls.Material
+import QtQuick.Layouts
 
-Window {
-    id: window
-    width: 640
-    height: 480
+ApplicationWindow {
+    id: main_applicationWindow
     visible: true
-    title: qsTr("Hello World")
+    width: (Qt.platform.os === "windows" || Qt.platform.os === "linux" || Qt.platform.os === "osx") ? 1280 : 720
+    height: (Qt.platform.os === "windows" || Qt.platform.os === "linux" || Qt.platform.os === "osx") ? 720 : 1280
+    title: qsTr("Cute Mino")
+    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
-    InputPanel {
-        id: inputPanel
-        z: 99
-        x: 0
-        y: window.height
-        width: window.width
+    StackView {
+        id: main_stackView
+        initialItem: "views/TitleStackView.qml"
+        anchors.fill: parent
+    }
 
-        states: State {
-            name: "visible"
-            when: inputPanel.active
-            PropertyChanges {
-                target: inputPanel
-                y: window.height - inputPanel.height
-            }
-        }
-        transitions: Transition {
-            from: ""
-            to: "visible"
-            reversible: true
-            ParallelAnimation {
-                NumberAnimation {
-                    properties: "y"
-                    duration: 250
-                    easing.type: Easing.InOutQuad
-                }
-            }
-        }
+    Component.onCompleted: {
+        main_gameManager.loadSettings()
     }
 }

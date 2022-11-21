@@ -9,6 +9,7 @@ endif ()
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
@@ -32,12 +33,10 @@ endif ()
 
 find_package(cryptopp CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
-find_package(Qt6 COMPONENTS Quick REQUIRED)
+find_package(Qt6 COMPONENTS Core Quick REQUIRED)
 
 qt_add_executable(
         ${PROJECT_NAME}
-        assets.qrc
-        views.qrc
         main.cpp
 )
 
@@ -45,7 +44,11 @@ qt_add_qml_module(
         ${PROJECT_NAME}
         URI ${PROJECT_NAME}
         VERSION 1.0
-        QML_FILES main.qml
+        QML_FILES
+        main.qml
+        RESOURCES
+        assets.qrc
+        views.qrc
 )
 
 aux_source_directory(controllers CTRL_SRC)
@@ -71,6 +74,7 @@ target_link_libraries(
         PRIVATE
         cryptopp::cryptopp
         magic_enum::magic_enum
+        Qt6::Core
         Qt6::Quick
 )
 
