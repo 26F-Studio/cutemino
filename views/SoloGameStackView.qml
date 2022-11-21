@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
-import CuteMino.Controllers
+//import CuteMino.Controllers
 
 Page {
     Rectangle {
@@ -11,13 +11,13 @@ Page {
         color: "dimgrey"
     }
 
-    GameManager {
-        id: main_gameManager
-        anchors.fill: parent
-    }
+//    GameManager {
+//        id: main_gameManager
+//        anchors.fill: parent
+//    }
 
     Component.onCompleted: {
-        main_gameManager
+//        main_gameManager
     }
 
     Keys.onPressed: (event) => {

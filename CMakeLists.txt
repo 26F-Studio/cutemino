@@ -37,6 +37,7 @@ find_package(Qt6 COMPONENTS Core Quick REQUIRED)
 
 qt_add_executable(
         ${PROJECT_NAME}
+        views.qrc
         main.cpp
 )
 
@@ -48,7 +49,6 @@ qt_add_qml_module(
         main.qml
         RESOURCES
         assets.qrc
-        views.qrc
 )
 
 aux_source_directory(controllers CTRL_SRC)

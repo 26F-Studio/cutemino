@@ -1,14 +1,14 @@
 <RCC>
-    <qresource>
+    <qresource prefix="/cutemino/">
         <file>assets/skins/normal/blue.png</file>
         <file>assets/skins/normal/cyan.png</file>
         <file>assets/skins/normal/grey.png</file>
         <file>assets/skins/normal/green.png</file>
         <file>assets/skins/normal/holo.png</file>
-        <file>assets/skins/normal/lightgray.png</file>
-        <file>assets/skins/normal/lightgreen.png</file>
-        <file>assets/skins/normal/lightpurple.png</file>
-        <file>assets/skins/normal/lightred.png</file>
+        <file>assets/skins/normal/light_grey.png</file>
+        <file>assets/skins/normal/light_green.png</file>
+        <file>assets/skins/normal/light_purple.png</file>
+        <file>assets/skins/normal/light_red.png</file>
         <file>assets/skins/normal/lime.png</file>
         <file>assets/skins/normal/magenta.png</file>
         <file>assets/skins/normal/orange.png</file>
