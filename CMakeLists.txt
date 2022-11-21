@@ -8,6 +8,7 @@ if (CMAKE_BUILD_TYPE MATCHES "Debug")
 endif ()
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
@@ -29,12 +30,16 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS NOMINMAX)
 endif ()
 
-set(REQUIRED_LIBS Quick)
-set(REQUIRED_LIBS_QUALIFIED Qt6::Quick)
+find_package(cryptopp CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
+find_package(Qt6 COMPONENTS Quick REQUIRED)
 
-find_package(Qt6 COMPONENTS ${REQUIRED_LIBS} REQUIRED)
-
-qt_add_executable(${PROJECT_NAME} main.cpp)
+qt_add_executable(
+        ${PROJECT_NAME}
+        assets.qrc
+        views.qrc
+        main.cpp
+)
 
 qt_add_qml_module(
         ${PROJECT_NAME}
@@ -64,7 +69,9 @@ target_include_directories(
 target_link_libraries(
         ${PROJECT_NAME}
         PRIVATE
-        ${REQUIRED_LIBS_QUALIFIED}
+        cryptopp::cryptopp
+        magic_enum::magic_enum
+        Qt6::Quick
 )
 
 set_target_properties(
