@@ -6,6 +6,7 @@
 
 #include <QImage>
 #include <QPoint>
+
 #include <types/Mino.h>
 
 namespace CuteMino::Models {

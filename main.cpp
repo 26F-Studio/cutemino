@@ -1,9 +1,13 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-
-#include <QLocale>
-#include <QTranslator>
 #include <QDirIterator>
+#include <QGuiApplication>
+#include <QLocale>
+#include <QQmlApplicationEngine>
+#include <QTranslator>
+
+#include <controllers/GameManager.h>
+
+using namespace CuteMino::Controllers;
+using namespace std;
 
 int main(int argc, char *argv[]) {
     qDebug() << "Initializing QtMino...";
@@ -14,6 +18,8 @@ int main(int argc, char *argv[]) {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
     QGuiApplication app(argc, argv);
+
+    qmlRegisterType<GameManager>("CuteMino.Controllers", 1, 0, "GameManager");
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
