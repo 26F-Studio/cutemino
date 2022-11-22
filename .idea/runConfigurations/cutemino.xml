@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="cutemino" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cutemino" TARGET_NAME="cutemino" CONFIG_NAME="Debug-VS22" RUN_TARGET_PROJECT_NAME="cutemino" RUN_TARGET_NAME="cutemino">
     <envs>
-      <env name="QT_ASSUME_STDERR_HAS_CONSOLE" value="1" />
+      <env name="QT_LOGGING_TO_CONSOLE" value="1" />
       <env name="PATH" value="C:\Qt\6.4.1\msvc2019_64\bin;" />
     </envs>
     <method v="2">

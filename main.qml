@@ -4,6 +4,8 @@ import QtQuick.Controls.Material
 import QtQuick.Layouts
 
 ApplicationWindow {
+    property alias mainStackView: main_stackView
+
     id: main_applicationWindow
     visible: true
     width: (Qt.platform.os === "windows" || Qt.platform.os === "linux" || Qt.platform.os === "osx") ? 1280 : 720
@@ -15,9 +17,5 @@ ApplicationWindow {
         id: main_stackView
         initialItem: "views/TitleStackView.qml"
         anchors.fill: parent
-    }
-
-    Component.onCompleted: {
-        main_gameManager.loadSettings()
     }
 }

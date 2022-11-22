@@ -2,7 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
-//import CuteMino.Controllers
+
+import CuteMino.Controllers
 
 Page {
     Rectangle {
@@ -11,13 +12,23 @@ Page {
         color: "dimgrey"
     }
 
-//    GameManager {
-//        id: main_gameManager
-//        anchors.fill: parent
-//    }
+    GameManager {
+        id: main_gameManager
+        anchors.fill: parent
+    }
+
+    Button {
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.margins: 20
+        text: qsTr("Get next mino")
+        onClicked: {
+            console.log("Pressed")
+        }
+    }
 
     Component.onCompleted: {
-//        main_gameManager
+        main_gameManager.loadSettings()
     }
 
     Keys.onPressed: (event) => {
