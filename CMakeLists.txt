@@ -87,14 +87,6 @@ set_target_properties(
         WIN32_EXECUTABLE TRUE
 )
 
-if (WIN32)
-    if (QT_BINARY_DIR)
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${QT_BINARY_DIR}/windeployqt.exe
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-    endif ()
-endif ()
-
 install(TARGETS ${PROJECT_NAME}
         BUNDLE DESTINATION .
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
