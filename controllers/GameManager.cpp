@@ -100,8 +100,9 @@ void GameManager::_generateMinoQueue() {
     qDebug() << "Mino queue generated.";
 }
 
-void GameManager::onGameStart(GameManager *_gameManager) {
-    qDebug() << "GameManager received settings signal.";
+void GameManager::onGameStart() {
+    qDebug() << "GameManager received game start signal.";
+    _generateMinoQueue();
     _currentMino = make_unique<Models::Mino>(_minoQueue.dequeue());
     _field = make_unique<Models::Field>(_rowCount, _columnCount);
 }
@@ -134,14 +135,17 @@ void GameManager::_paintFrame(QPainter *painter) {
 }
 
 void GameManager::_paintField(QPainter *painter) {
-
+    painter->save();
+    painter->restore();
 }
 
 void GameManager::_paintMino(QPainter *painter) {
-
+    painter->save();
+    painter->restore();
 }
 
 void GameManager::_paintNexts(QPainter *painter) {
-
+    painter->save();
+    painter->restore();
 }
 

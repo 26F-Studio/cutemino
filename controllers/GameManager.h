@@ -16,7 +16,7 @@ namespace CuteMino::Controllers {
     class GameManager : public QQuickPaintedItem {
     Q_OBJECT
     public:
-        explicit GameManager(QQuickPaintedItem *parent);
+        explicit GameManager(QQuickPaintedItem *parent = nullptr);
 
         Q_INVOKABLE void loadSettings();
 
@@ -47,10 +47,10 @@ namespace CuteMino::Controllers {
 
         double _frameHeight{}, _frameWidth{}, _frameThickness{};
         std::unique_ptr<Models::Field> _field;
-        QQueue<Models::Mino> _minoQueue;
         std::unique_ptr<Models::Mino> _currentMino;
+        QQueue<Models::Mino> _minoQueue;
 
     public slots:
-        Q_INVOKABLE void onGameStart(CuteMino::Controllers::GameManager *_gameManager);
+        Q_INVOKABLE void onGameStart();
     };
 }
