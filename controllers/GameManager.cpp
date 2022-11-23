@@ -47,13 +47,13 @@ void GameManager::loadSettings() {
         _minoEdgeLength = _fieldHeight / static_cast<double>(_rowCount);
     }
 
-    _minoAssets[Mino::I].load(":/assets/skins/normal/skyblue.png");
-    _minoAssets[Mino::J].load(":/assets/skins/normal/blue.png");
-    _minoAssets[Mino::L].load(":/assets/skins/normal/orange.png");
-    _minoAssets[Mino::O].load(":/assets/skins/normal/yellow.png");
-    _minoAssets[Mino::S].load(":/assets/skins/normal/green.png");
-    _minoAssets[Mino::T].load(":/assets/skins/normal/pink.png");
-    _minoAssets[Mino::Z].load(":/assets/skins/normal/red.png");
+    _minoAssets[Mino::I].load("qrc:/cutemino/assets/skins/top_default/mino_blue_light.png");
+    _minoAssets[Mino::J].load("qrc:/cutemino/assets/skins/top_default/mino_blue.png");
+    _minoAssets[Mino::L].load("qrc:/cutemino/assets/skins/top_default/mino_orange.png");
+    _minoAssets[Mino::O].load("qrc:/cutemino/assets/skins/top_default/mino_yellow.png");
+    _minoAssets[Mino::S].load("qrc:/cutemino/assets/skins/top_default/mino_green.png");
+    _minoAssets[Mino::T].load("qrc:/cutemino/assets/skins/top_default/mino_pink.png");
+    _minoAssets[Mino::Z].load("qrc:/cutemino/assets/skins/top_default/mino_red.png");
 
     qDebug() << "settings loaded.";
 }
