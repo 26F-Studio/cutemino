@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/cutemino/">
-        <file>views/TitleStackView.qml</file>
-        <file>views/SoloGameStackView.qml</file>
-    </qresource>
-</RCC>

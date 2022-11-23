@@ -8,7 +8,7 @@ Page {
         anchors.centerIn: parent
         text: "Start Game"
         onClicked: {
-            mainStackView.push("SoloGameStackView.qml")
+            mainStackView.push("/views/SoloGameStackView.qml")
 //            mainGameManager.exportSettings()
         }
     }

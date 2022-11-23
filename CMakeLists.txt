@@ -33,11 +33,12 @@ endif ()
 
 find_package(cryptopp CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
-find_package(Qt6 COMPONENTS Core Quick REQUIRED)
+find_package(Qt6 COMPONENTS Core Quick)
 
 qt_add_executable(
         ${PROJECT_NAME}
-        views.qrc
+        assets/assets.qrc
+        views/views.qrc
         main.cpp
 )
 
@@ -47,8 +48,6 @@ qt_add_qml_module(
         VERSION 1.0
         QML_FILES
         main.qml
-        RESOURCES
-        assets.qrc
 )
 
 aux_source_directory(controllers CTRL_SRC)

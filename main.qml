@@ -15,7 +15,7 @@ ApplicationWindow {
 
     StackView {
         id: main_stackView
-        initialItem: "views/TitleStackView.qml"
+        initialItem: "/views/TitleStackView.qml"
         anchors.fill: parent
     }
 }

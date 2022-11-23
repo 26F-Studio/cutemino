@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/assets/">
+        <file>skins/normal/mino_blue.png</file>
+        <file>skins/normal/mino_blue_light.png</file>
+        <file>skins/normal/mino_cyan.png</file>
+        <file>skins/normal/mino_green.png</file>
+        <file>skins/normal/mino_green_light.png</file>
+        <file>skins/normal/mino_grey.png</file>
+        <file>skins/normal/mino_grey_light.png</file>
+        <file>skins/normal/mino_holo.png</file>
+        <file>skins/normal/mino_lime.png</file>
+        <file>skins/normal/mino_magenta.png</file>
+        <file>skins/normal/mino_orange.png</file>
+        <file>skins/normal/mino_pink.png</file>
+        <file>skins/normal/mino_purple.png</file>
+        <file>skins/normal/mino_purple_light.png</file>
+        <file>skins/normal/mino_red.png</file>
+        <file>skins/normal/mino_red_light.png</file>
+        <file>skins/normal/mino_transparent.png</file>
+        <file>skins/normal/mino_yellow.png</file>
+    </qresource>
+    <qresource prefix="/assets/">
+        <file>skins/top_default/cover_lg.png</file>
+        <file>skins/top_default/cover_md.png</file>
+        <file>skins/top_default/cover_sm.png</file>
+        <file>skins/top_default/matrix_cover.png</file>
+        <file>skins/top_default/matrix_full.png</file>
+        <file>skins/top_default/matrix_lite.png</file>
+        <file>skins/top_default/mino_blue.png</file>
+        <file>skins/top_default/mino_blue_light.png</file>
+        <file>skins/top_default/mino_green.png</file>
+        <file>skins/top_default/mino_grey.png</file>
+        <file>skins/top_default/mino_grey_light.png</file>
+        <file>skins/top_default/mino_lime.png</file>
+        <file>skins/top_default/mino_orange.png</file>
+        <file>skins/top_default/mino_pink.png</file>
+        <file>skins/top_default/mino_red.png</file>
+        <file>skins/top_default/mino_yellow.png</file>
+    </qresource>
+</RCC>

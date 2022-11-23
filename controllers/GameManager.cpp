@@ -47,6 +47,12 @@ void GameManager::loadSettings() {
         _minoEdgeLength = _fieldHeight / static_cast<double>(_rowCount);
     }
 
+    qDebug() << "Box size: " << boxWidth << "x" << boxHeight;
+    qDebug() << "Field size: " << _rowCount << "x" << _columnCount;
+    qDebug() << "Field rect: " << _fieldWidth << "x" << _fieldHeight;
+    qDebug() << "Frame rect: " << _frameWidth << "x" << _frameHeight;
+    qDebug() << "Mino rect: " << _minoEdgeLength << "x" << _minoEdgeLength;
+
     _minoAssets[Mino::I].load("qrc:/cutemino/assets/skins/top_default/mino_blue_light.png");
     _minoAssets[Mino::J].load("qrc:/cutemino/assets/skins/top_default/mino_blue.png");
     _minoAssets[Mino::L].load("qrc:/cutemino/assets/skins/top_default/mino_orange.png");
@@ -115,22 +121,24 @@ void GameManager::_paintFrame(QPainter *painter) {
     QPointF bottomLeft(boxWidth / 2.0 - _frameWidth / 2.0, boxHeight / 2.0 + _frameHeight / 2.0);
     QPointF bottomRight(boxWidth / 2.0 + _frameWidth / 2.0, boxHeight / 2.0 + _frameHeight / 2.0);
     painter->save();
-    painter->setPen(QPen(QColor("gray"), 1));
-    for (int row = 1; row < _rowCount; ++row) {
-        QPointF tempLeft(topLeft.x() + _frameThickness / 2.0, topLeft.y() + _frameThickness / 2.0 + row * _minoEdgeLength);
-        QPointF tempRight(topRight.x() + _frameThickness / 2.0, topRight.y() + _frameThickness / 2.0 + row * _minoEdgeLength);
-        painter->drawLine(tempLeft, tempRight);
-    }
-
-    for (int column = 1; column < _columnCount; ++column) {
-        QPointF tempTop(topLeft.x() + _frameThickness / 2.0 + column * _minoEdgeLength, topLeft.y() + _frameThickness / 2.0);
-        QPointF tempBottom(bottomLeft.x() + _frameThickness / 2.0 + column * _minoEdgeLength, bottomLeft.y() + _frameThickness / 2.0);
-        painter->drawLine(tempTop, tempBottom);
-    }
-
-    painter->setPen(QPen(QColor("white"), 10, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
-    painter->setBrush(QColor("transparent"));
-    painter->drawRect(QRectF(topLeft, bottomRight));
+//    painter->setPen(QPen(QColor("gray"), 1));
+//    for (int row = 1; row < _rowCount; ++row) {
+//        QPointF tempLeft(topLeft.x() + _frameThickness / 2.0, topLeft.y() + _frameThickness / 2.0 + row * _minoEdgeLength);
+//        QPointF tempRight(topRight.x() + _frameThickness / 2.0, topRight.y() + _frameThickness / 2.0 + row * _minoEdgeLength);
+//        painter->drawLine(tempLeft, tempRight);
+//    }
+//
+//    for (int column = 1; column < _columnCount; ++column) {
+//        QPointF tempTop(topLeft.x() + _frameThickness / 2.0 + column * _minoEdgeLength, topLeft.y() + _frameThickness / 2.0);
+//        QPointF tempBottom(bottomLeft.x() + _frameThickness / 2.0 + column * _minoEdgeLength, bottomLeft.y() + _frameThickness / 2.0);
+//        painter->drawLine(tempTop, tempBottom);
+//    }
+//
+//    painter->setPen(QPen(QColor("white"), 10, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+//    painter->setBrush(QColor("transparent"));
+//    painter->drawRect(QRectF(topLeft, bottomRight));
+    const auto matrix = QImage(":/assets/skins/top_default/matrix_full.png");
+    painter->drawImage(topLeft, matrix, matrix.rect());
     painter->restore();
 }
 
