@@ -5,22 +5,22 @@
 #include <QPainter>
 #include <QSettings>
 
-#include <controllers/GameManager.h>
+#include <controllers/GameController.h>
 
 using namespace CuteMino::Controllers;
 using namespace CuteMino::Types;
 using namespace std;
 
-GameManager::GameManager(QQuickPaintedItem *parent) : QQuickPaintedItem(parent) {
-    qDebug() << "Initializing GameManager...";
+GameController::GameController(QQuickPaintedItem *parent) : QQuickPaintedItem(parent) {
+    qDebug() << "Initializing GameController...";
 
     QSettings qSettings;
     _frameThickness = qSettings.value("QtMino_FrameThickness", 10).toUInt();
 
-    qDebug() << "GameManager Initialized.";
+    qDebug() << "GameController Initialized.";
 }
 
-void GameManager::loadSettings() {
+void GameController::loadSettings() {
     qDebug() << "Loading settings...";
 
     QSettings qSettings;
@@ -64,7 +64,7 @@ void GameManager::loadSettings() {
     qDebug() << "settings loaded.";
 }
 
-void GameManager::exportSettings() {
+void GameController::exportSettings() {
     qDebug() << "Exporting settings...";
 
     QSettings qSettings;
@@ -77,7 +77,7 @@ void GameManager::exportSettings() {
     qDebug() << "settings exported.";
 }
 
-void GameManager::paint(QPainter *painter) {
+void GameController::paint(QPainter *painter) {
     painter->setRenderHint(QPainter::Antialiasing, true);
     _paintFrame(painter);
     _paintField(painter);
@@ -85,15 +85,15 @@ void GameManager::paint(QPainter *painter) {
     _paintNexts(painter);
 }
 
-void GameManager::keyPressEvent(QKeyEvent *event) {
+void GameController::keyPressEvent(QKeyEvent *event) {
     QQuickPaintedItem::keyPressEvent(event);
 }
 
-void GameManager::keyReleaseEvent(QKeyEvent *event) {
+void GameController::keyReleaseEvent(QKeyEvent *event) {
     QQuickPaintedItem::keyReleaseEvent(event);
 }
 
-void GameManager::_generateMinoQueue() {
+void GameController::_generateMinoQueue() {
     qDebug() << "Generating mino queue...";
 
     _minoQueue.clear();
@@ -106,20 +106,14 @@ void GameManager::_generateMinoQueue() {
     qDebug() << "Mino queue generated.";
 }
 
-void GameManager::onGameStart() {
-    qDebug() << "GameManager received game start signal.";
+void GameController::onGameStart() {
+    qDebug() << "GameController received game start signal.";
     _generateMinoQueue();
     _currentMino = make_unique<Models::Mino>(_minoQueue.dequeue());
     _field = make_unique<Models::Field>(_rowCount, _columnCount);
 }
 
-void GameManager::_paintFrame(QPainter *painter) {
-    const auto boxHeight = height();
-    const auto boxWidth = width();
-    QPointF topLeft(boxWidth / 2.0 - _frameWidth / 2.0, boxHeight / 2.0 - _frameHeight / 2.0);
-    QPointF topRight(boxWidth / 2.0 + _frameWidth / 2.0, boxHeight / 2.0 - _frameHeight / 2.0);
-    QPointF bottomLeft(boxWidth / 2.0 - _frameWidth / 2.0, boxHeight / 2.0 + _frameHeight / 2.0);
-    QPointF bottomRight(boxWidth / 2.0 + _frameWidth / 2.0, boxHeight / 2.0 + _frameHeight / 2.0);
+void GameController::_paintFrame(QPainter *painter) {
     painter->save();
 //    painter->setPen(QPen(QColor("gray"), 1));
 //    for (int row = 1; row < _rowCount; ++row) {
@@ -137,22 +131,26 @@ void GameManager::_paintFrame(QPainter *painter) {
 //    painter->setPen(QPen(QColor("white"), 10, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
 //    painter->setBrush(QColor("transparent"));
 //    painter->drawRect(QRectF(topLeft, bottomRight));
-    const auto matrix = QImage(":/assets/skins/top_default/matrix_full.png");
-    painter->drawImage(topLeft, matrix, matrix.rect());
+    auto matrix = QImage(":/assets/skins/top_default/matrix_full.png").scaled(
+            size().toSize(),
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation
+    );
+    painter->drawImage(QPoint{}, matrix);
     painter->restore();
 }
 
-void GameManager::_paintField(QPainter *painter) {
+void GameController::_paintField(QPainter *painter) {
     painter->save();
     painter->restore();
 }
 
-void GameManager::_paintMino(QPainter *painter) {
+void GameController::_paintMino(QPainter *painter) {
     painter->save();
     painter->restore();
 }
 
-void GameManager::_paintNexts(QPainter *painter) {
+void GameController::_paintNexts(QPainter *painter) {
     painter->save();
     painter->restore();
 }

@@ -13,10 +13,10 @@
 #include <models/Mino.h>
 
 namespace CuteMino::Controllers {
-    class GameManager : public QQuickPaintedItem {
+    class GameController : public QQuickPaintedItem {
     Q_OBJECT
     public:
-        explicit GameManager(QQuickPaintedItem *parent = nullptr);
+        explicit GameController(QQuickPaintedItem *parent = nullptr);
 
         Q_INVOKABLE void loadSettings();
 

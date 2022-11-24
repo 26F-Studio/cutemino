@@ -4,7 +4,7 @@
 #include <QQmlApplicationEngine>
 #include <QTranslator>
 
-#include <controllers/GameManager.h>
+#include <controllers/GameController.h>
 
 using namespace CuteMino::Controllers;
 using namespace std;
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<GameManager>("CuteMino.Controllers", 1, 0, "GameManager");
+    qmlRegisterType<GameController>("CuteMino.Controllers", 1, 0, "GameController");
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();

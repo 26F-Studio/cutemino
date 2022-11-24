@@ -12,8 +12,8 @@ Page {
         color: "dimgrey"
     }
 
-    GameManager {
-        id: main_gameManager
+    GameController {
+        id: main_gameController
         anchors.fill: parent
     }
 
@@ -28,7 +28,7 @@ Page {
     }
 
     Component.onCompleted: {
-        main_gameManager.loadSettings()
+        main_gameController.loadSettings()
     }
 
     Keys.onPressed: (event) => {
