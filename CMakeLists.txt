@@ -53,6 +53,7 @@ qt_add_qml_module(
 aux_source_directory(controllers CTRL_SRC)
 aux_source_directory(managers MANAGER_SRC)
 aux_source_directory(models MODEL_SRC)
+aux_source_directory(structures STRUCT_SRC)
 aux_source_directory(types TYPE_SRC)
 
 target_sources(
@@ -61,6 +62,7 @@ target_sources(
         ${CTRL_SRC}
         ${MANAGER_SRC}
         ${MODEL_SRC}
+        ${STRUCT_SRC}
         ${TYPE_SRC}
 )
 
